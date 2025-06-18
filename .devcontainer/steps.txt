@@ -1,0 +1,21 @@
+1) downgrade numpy to 1.26.4
+2) pip install -U openmim
+3) mim install mmengine mmcv==2.1 mmdet==3.2 mmdet3d
+4) git clone git@github.com:Abyssaledge/TorchEx.git pip install .
+5) install ipdb
+6) install pytorch_lightning
+
+7) need to dowgrade to torch==2.5.1 and torchvision==0.20.1
+8) pip install wandb
+
+python train.py --data-dir /workspace/datasets/once/train --name test_run --batch-size 64 --workers 4 --clip-model ViT-L/14
+
+python cache_embeddings.py --checkpoint=/workspace/checkpoints/vit_b_32.ckpt
+
+
+docker run -it --gpus all \
+  --shm-size=8g \
+  -v /media/mark/WD/once:/workspace/datasets/once/train \
+  -v /media/mark/WD/pointcloud_evaluation:/workspace/pointcloud_evaluation \
+  app_deps_final:latest \
+  /bin/bash

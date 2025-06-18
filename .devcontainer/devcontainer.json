@@ -1,0 +1,15 @@
+{
+  "image": "mint21.3:latest",
+
+  // 1. Примонтировать весь репозиторий
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind",
+  "workspaceFolder": "/workspace",
+
+  // 3. Сразу указываем «правильный» интерпретатор
+  "settings": {
+    "python.defaultInterpreterPath": "/home/user/.local/bin/python"
+  },
+
+  // 4. Расширения VS Code, которые ставятся внутрь контейнера
+  "extensions": ["ms-python.python"]
+}
