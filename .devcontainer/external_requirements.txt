@@ -1,0 +1,2 @@
+1) pip install -U openmim
+2) mim install mmengine mmcv==2.1 mmdet==3.2 mmdet3d

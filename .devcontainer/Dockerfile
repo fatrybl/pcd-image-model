@@ -10,7 +10,7 @@ RUN ln -snf /usr/share/zoneinfo/Europe/Moscow /etc/localtime && \
 # System dependencies
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y --no-install-recommends \
-        wget git build-essential ca-certificates libgl1 libglib2.0-0 sudo && \
+        wget git build-essential ca-certificates libgl1 libglib2.0-0 sudo curl && \
     apt-get autoremove -y && apt-get autoclean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -50,11 +50,12 @@ RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -
 ENV PATH="/home/user/miniconda3/bin:$PATH"
 
 RUN conda update -n base -c defaults conda -y && \
+    conda update --all -y && \
     conda init bash
 
 ENV CMAKE_PREFIX_PATH="$(dirname $(which conda))/../"
 
-# STAGE 4: Core Python environment with Torch
+# STAGE 4: Core Python environment
 FROM miniconda as core_env
 
 # Create environment and activation setup
@@ -66,18 +67,25 @@ RUN conda create -y -n py39 python=3.9 && \
     ln -sf ~/miniconda3/envs/py39/bin/pip ~/.local/bin/pip
 
 # Install stable Python packages
-RUN pip install --upgrade pip && \
-    pip install -v torch==2.5.1 torchvision==0.20.1 pytorch_lightning
+RUN pip install --upgrade pip
 
-# STAGE 5: Application-specific dependencies (frequently changed)
+# Install Poetry
+RUN curl -sSL https://install.python-poetry.org | python3 - && \
+    echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && \
+    poetry self update && \
+    poetry completions bash > $HOME/.bash_completion && \
+    echo 'source $HOME/.bash_completion' >> ~/.bashrc
+
+# STAGE 5: Application-specific dependencies
 FROM core_env as app_deps
 
-# Install CLIP and MM libs
-RUN pip install ftfy regex tqdm ipdb wandb && \
-    pip install numpy==1.26.4 && \
-    pip install git+https://github.com/openai/CLIP.git
+# Install Numpy 1.26.4 and openmim for MM-based apps
+RUN pip install numpy==1.26.4 && \
+    pip install -U openmim
 
-RUN pip install -U openmim
+RUN cd /workspace && \
+    git clone https://github.com/fatrybl/pcd-image-model.git && \
+    cd pcd-image-model && poetry install
 
 RUN python -m mim install mmengine && \
     python -m mim install mmcv==2.1 mmdet==3.2 mmdet3d

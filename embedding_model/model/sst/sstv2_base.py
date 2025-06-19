@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 
 from mmcv.cnn import build_conv_layer, build_norm_layer
-from pcd_eval.model.sst.sst_basic_block_v2 import BasicShiftBlockV2
+from embedding_model.model.sst.sst_basic_block_v2 import BasicShiftBlockV2
 
 
 @MODELS.register_module()

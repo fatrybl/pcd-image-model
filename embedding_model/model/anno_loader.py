@@ -9,7 +9,7 @@ import torch
 from torch.utils.data import DataLoader
 from torch.utils.data.dataloader import default_collate
 
-from pcd_eval.model.loader import CAM_NAMES, OnceImageLidarDataset
+from embedding_model.model.loader import CAM_NAMES, OnceImageLidarDataset
 
 
 CENTERCROP_BOX = [450, 0, 1470, 1020]

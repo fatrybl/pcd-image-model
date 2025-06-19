@@ -4,11 +4,11 @@ from torch import nn
 
 from mmdet3d.registry import MODELS
 
-from pcd_eval.model.sst.attention_pool import AttentionPool2d
-from pcd_eval.model.sst.sst_encoder_config_v2 import model as sst_model_conf
-import pcd_eval.model.sst.sstv2_base
-import pcd_eval.model.sst.sst_input_layer_v2
-import pcd_eval.model.sst.objects
+from embedding_model.model.sst.attention_pool import AttentionPool2d
+from embedding_model.model.sst.sst_encoder_config_v2 import model as sst_model_conf
+import embedding_model.model.sst.sstv2_base
+import embedding_model.model.sst.sst_input_layer_v2
+import embedding_model.model.sst.objects
 
 
 def build_sst(config_path):

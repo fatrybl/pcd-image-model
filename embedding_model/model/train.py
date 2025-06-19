@@ -13,9 +13,9 @@ from torch.nn import functional as F
 import clip
 from clip.model import CLIP
 
-from pcd_eval.model.sst.lidar_encoder import LidarEncoderSST
+from embedding_model.model.sst.lidar_encoder import LidarEncoderSST
 
-from pcd_eval.model.loader import build_loader
+from embedding_model.model.loader import build_loader
 
 def l2norm(t):
     return F.normalize(t, dim=-1, p=2)

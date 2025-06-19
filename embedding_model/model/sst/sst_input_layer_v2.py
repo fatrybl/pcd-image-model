@@ -4,7 +4,7 @@ from torch import nn
 
 from mmdet3d.registry import MODELS
 
-from pcd_eval.model.sst.sst_ops import flat2window_v2, window2flat_v2, get_inner_win_inds,get_flat2win_inds_v2, get_window_coors
+from embedding_model.model.sst.sst_ops import flat2window_v2, window2flat_v2, get_inner_win_inds,get_flat2win_inds_v2, get_window_coors
 
 @MODELS.register_module()
 class PseudoMiddleEncoderForSpconvFSD(nn.Module):

@@ -11,9 +11,9 @@ import clip
 
 from mmengine.runner import load_checkpoint
 
-from pcd_eval.model.anno_loader import build_anno_loader
-from pcd_eval.model.loader import build_loader as build_dataonly_loader
-from pcd_eval.model.sst.lidar_encoder import LidarEncoderSST
+from embedding_model.model.anno_loader import build_anno_loader
+from embedding_model.model.loader import build_loader as build_dataonly_loader
+from embedding_model.model.sst.lidar_encoder import LidarEncoderSST
 
 
 DEFAULT_DATA_PATHS = {
