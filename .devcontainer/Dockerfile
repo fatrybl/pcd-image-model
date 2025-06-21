@@ -86,6 +86,8 @@ RUN pip install numpy==1.26.4 && \
     pip install -U openmim
 
 # Install Model with dependencies
+SHELL ["/bin/bash", "-l", "-c"]
+
 RUN cd /workspace && \
     git clone https://github.com/fatrybl/pcd-image-model.git && \
     cd pcd-image-model && \
@@ -95,6 +97,8 @@ RUN cd /workspace && \
 FROM app_deps AS mm_deps
 
 SHELL ["/bin/bash", "-l", "-c"]
+
+RUN pip install torch==2.5.1 torchvision==0.20.1 pytorch-lightning
 
 # Install MMEngine, MMCV, MMDetection, and MMDetection3D
 RUN mim install mmengine && \

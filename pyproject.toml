@@ -11,9 +11,6 @@ authors = ["Mark Griguletskii mark.griguletskii@skoltech.ru"]
 # Base dependencies (equivalent to STAGE 4 in Dockerfile)
 [tool.poetry.dependencies]
 python = "^3.9"
-torch = "2.5.1"
-torchvision = "0.20.1"
-pytorch-lightning = "*"
 
 # Common utilities (first part of STAGE 5)
 [tool.poetry.group.utils.dependencies]
@@ -22,5 +19,4 @@ regex = "*"
 tqdm = "*"
 ipdb = "*"
 wandb = "*"
-numpy = "1.26.4"
 clip = {git = "https://github.com/openai/CLIP.git"}
