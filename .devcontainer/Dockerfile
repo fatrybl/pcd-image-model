@@ -71,7 +71,6 @@ RUN curl -sSL https://install.python-poetry.org | python3 - && \
     echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc && \
     source ~/.bashrc && \
     export PATH="$HOME/.local/bin:$PATH" && \
-    poetry config virtualenvs.create false && \
     poetry self update && \
     poetry completions bash > $HOME/.bash_completion && \
     echo 'source $HOME/.bash_completion' >> ~/.bashrc
@@ -95,7 +94,8 @@ SHELL ["/bin/bash", "-l", "-c"]
 RUN cd /workspace && \
     git clone https://github.com/fatrybl/pcd-image-model.git && \
     cd pcd-image-model && \
-    conda run -n py39 poetry install --verbose
+    conda run -n py39 poetry config virtualenvs.create false && \
+    conda run -n py39 poetry install
 
 # STAGE 7: Dependencies for MM libs
 FROM app_deps AS mm_deps
