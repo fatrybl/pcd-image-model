@@ -56,7 +56,7 @@ ENV CMAKE_PREFIX_PATH="$(dirname $(which conda))/../"
 # STAGE 4: Core Python environment (where shell activation begins)
 FROM miniconda AS core_env
 
-# Use the login shell to ensure .bashrc is loaded
+## Use the login shell to ensure .bashrc is loaded
 SHELL ["/bin/bash", "-l", "-c"]
 
 # Create and activate environment
@@ -76,42 +76,47 @@ RUN curl -sSL https://install.python-poetry.org | python3 - && \
     poetry completions bash > $HOME/.bash_completion && \
     echo 'source $HOME/.bash_completion' >> ~/.bashrc
 
-# STAGE 5: Model-specific dependencies
-FROM core_env AS app_deps
+#STAGE 5: torch and numpy
+FROM core_env AS torch_deps
 
 SHELL ["/bin/bash", "-l", "-c"]
 
 # Install Numpy 1.26.4 and openmim for MM-based apps
-RUN pip install numpy==1.26.4 && \
-    pip install -U openmim
+RUN conda run -n py39 pip install numpy==1.26.4 && \
+    conda run -n py39 pip install -U openmim
+
+RUN conda run -n py39 pip install torch==2.5.1 torchvision==0.20.1 pytorch-lightning
+
+# STAGE 6: Model-specific dependencies
+FROM torch_deps AS app_deps
+
+SHELL ["/bin/bash", "-l", "-c"]
 
 RUN cd /workspace && \
     git clone https://github.com/fatrybl/pcd-image-model.git && \
     cd pcd-image-model && \
-    poetry install --verbose
+    conda run -n py39 poetry install --verbose
 
-# STAGE 6: Dependencies for MM libs
+# STAGE 7: Dependencies for MM libs
 FROM app_deps AS mm_deps
 
 SHELL ["/bin/bash", "-l", "-c"]
 
-RUN pip install torch==2.5.1 torchvision==0.20.1 pytorch-lightning
-
 # Install MMEngine, MMCV, MMDetection, and MMDetection3D
-RUN mim install mmengine && \
-    mim install mmcv==2.1 mmdet==3.2 mmdet3d
+RUN conda run -n py39 mim install mmengine && \
+    conda run -n py39 mim install mmcv==2.1 mmdet==3.2 mmdet3d
 
 # Install TorchEx
 RUN cd /tmp && git clone https://github.com/Abyssaledge/TorchEx.git && \
     cd TorchEx && \
-    pip install --no-build-isolation . && \
+    conda run -n py39 pip install --no-build-isolation . && \
     cd .. && \
     rm -rf TorchEx
 
-# STAGE 7: Final clean up
+# STAGE 8: Final clean up
 FROM mm_deps AS final
 
-SHELL ["/bin/bash", "-l", "-c"]
+#SHELL ["/bin/bash", "-l", "-c"]
 
 # Cleanup
 RUN conda clean -afy && \
