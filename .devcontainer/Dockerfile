@@ -95,7 +95,7 @@ RUN cd /workspace && \
     git clone https://github.com/fatrybl/pcd-image-model.git && \
     cd pcd-image-model && \
     conda run -n py39 poetry config virtualenvs.create false && \
-    conda run -n py39 poetry install
+    conda run -n py39 poetry install --verbose
 
 # STAGE 7: Dependencies for MM libs
 FROM app_deps AS mm_deps

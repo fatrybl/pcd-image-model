@@ -10,7 +10,7 @@ authors = ["Mark Griguletskii mark.griguletskii@skoltech.ru"]
 
 # Base dependencies
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "~3.9"
 ftfy = "*"
 regex = "*"
 tqdm = "*"
