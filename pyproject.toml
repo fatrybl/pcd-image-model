@@ -8,15 +8,12 @@ version = "0.1.0"
 description = "A LidarCLIP-based model to create embedings for point cloud & image."
 authors = ["Mark Griguletskii mark.griguletskii@skoltech.ru"]
 
-# Base dependencies (equivalent to STAGE 4 in Dockerfile)
+# Base dependencies
 [tool.poetry.dependencies]
 python = "^3.9"
 torch = "2.5.1"
 torchvision = "0.20.1"
 pytorch-lightning = "*"
-
-# Common utilities (first part of STAGE 5)
-[tool.poetry.group.utils.dependencies]
 ftfy = "*"
 regex = "*"
 tqdm = "*"
