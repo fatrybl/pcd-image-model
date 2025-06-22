@@ -85,9 +85,6 @@ SHELL ["/bin/bash", "-l", "-c"]
 RUN pip install numpy==1.26.4 && \
     pip install -U openmim
 
-# Install Model with dependencies
-SHELL ["/bin/bash", "-l", "-c"]
-
 RUN cd /workspace && \
     git clone https://github.com/fatrybl/pcd-image-model.git && \
     cd pcd-image-model && \
