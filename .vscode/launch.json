@@ -7,16 +7,16 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "justMyCode": false
+            "justMyCode": false,
         },
         {
             "name": "Python: Train Model",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/pointcloud_evaluation/src/pcd_eval/model/train.py",
+            "program": "${workspaceFolder}/embedding_model/model/train.py",
             "args": [
                 "--data-dir",
-                "/workspace/datasets/train",
+                "/workspace/datasets/once/train",
                 "--name",
                 "test_run",
                 "--batch-size",
@@ -26,7 +26,7 @@
                 "--clip-model",
                 "ViT-L/14",
                 "--config-path",
-                "${workspaceFolder}/pointcloud_evaluation/src/pcd_eval/model/sst/sst_encoder_config_v2.py",
+                "${workspaceFolder}/embedding_model/model/sst/sst_encoder_config_v2.py",
             ],
             "justMyCode": false
         },
@@ -34,10 +34,10 @@
             "name": "Cache embeddings",
             "type": "debugpy",
             "request": "launch",
-            "program": "${workspaceFolder}/pointcloud_evaluation/src/pcd_eval/model/cache_embeddings.py",
+            "program": "${workspaceFolder}/embedding_model/model/cache_embeddings.py",
             "args": [
                 "--config-path",
-                "${workspaceFolder}/pointcloud_evaluation/src/pcd_eval/model/sst/sst_encoder_config_v2.py",
+                "${workspaceFolder}/embedding_model/model/sst/sst_encoder_config_v2.py",
                 "--checkpoint",
                 "${workspaceFolder}/lidar-clippin/8hbg3w89/checkpoints/last.ckpt",
                 "--data-path",
